@@ -1,0 +1,22 @@
+android {
+    defaultConfig {
+        applicationId "xyz.teja.chain26"
+        resConfigs "en"
+    }
+}
+
+dependencies {
+    implementation project(Modules.NETWORK.path)
+    implementation project(Modules.CHARTS.path)
+
+    // Google Support
+    implementation LibSupport.appcompat
+    implementation LibSupport.recyclerView
+    implementation LibSupport.constraintLayout
+    implementation LibCore.koinViewModel
+
+    implementation LibCore.glide
+    kapt LibCore.glideCompiler
+
+    implementation LibOther.slidingUpPanel
+}

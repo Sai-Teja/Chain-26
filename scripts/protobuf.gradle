@@ -1,0 +1,21 @@
+apply plugin: 'com.google.protobuf'
+
+android.sourceSets.main.proto.srcDir '$projectDir/src/main/proto'
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:${Versions.protobuf}"
+    }
+    generateProtoTasks {
+        all().each { task ->
+            task.builtins {
+                remove javanano
+                java {}
+            }
+        }
+    }
+}
+
+dependencies {
+    implementation LibProtobuf.main
+}

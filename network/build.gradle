@@ -1,0 +1,4 @@
+dependencies {
+    api LibNetwork.loggingInterceptor
+    api LibNetwork.rxJavaAdapter
+}

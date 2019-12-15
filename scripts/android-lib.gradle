@@ -1,0 +1,13 @@
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+apply plugin: "kotlin-kapt"
+
+dependencies {
+    // ViewModel and LiveData
+    implementation LibSupport.lifecycle
+
+    implementation LibNetwork.retrofit
+    implementation LibNetwork.gsonConverter
+
+    testImplementation LibTest.lifecycleTesting
+}

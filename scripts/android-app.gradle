@@ -1,0 +1,23 @@
+apply plugin: "com.android.application"
+apply plugin: "kotlin-android"
+apply plugin: "kotlin-kapt"
+
+android {
+    defaultConfig.multiDexEnabled = true
+    dataBinding.enabled = true
+    dexOptions.jumboMode = true
+
+    packagingOptions.exclude("META-INF/beans.xml")
+
+    lintOptions.checkReleaseBuilds = false
+    // Or, if you prefer, you can continue to check for errors in release builds,
+    // but continue the build even when errors are found:
+    lintOptions.abortOnError = false
+}
+
+dependencies {
+    implementation LibCore.multiDex
+
+    implementation LibCore.room
+    kapt LibCore.roomCompiler
+}

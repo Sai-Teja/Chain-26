@@ -1,0 +1,30 @@
+apply from: "$scriptsPath/protobuf.gradle"
+
+protobuf {
+    plugins {
+        grpc {
+            artifact = "io.grpc:protoc-gen-grpc-java:${Versions.grpc}"
+        }
+    }
+
+    generateProtoTasks {
+        all().each { task ->
+            task.plugins {
+                // Add grpc output without any option.  grpc must have been defined in the
+                // protobuf.plugins block.
+                // This yields
+                // "--grpc_out=/path/to/output" on the protoc commandline.
+                grpc {}
+            }
+        }
+    }
+}
+
+dependencies {
+    implementation LibProtobuf.grpcOkHttp
+    implementation LibProtobuf.grpcMain
+    implementation LibProtobuf.grpcStub
+    implementation LibProtobuf.grpcAuth
+
+    implementation LibProtobuf.javaXAnnotations
+}

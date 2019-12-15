@@ -1,0 +1,18 @@
+apply plugin: "java-library"
+apply plugin: "kotlin"
+apply plugin: "kotlin-kapt"
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation LibCore.kotlin
+    implementation LibCore.rxjava
+    implementation LibCore.rxkotlin
+    implementation LibCore.koinAndroid
+
+    implementation LibNetwork.retrofit
+    implementation LibNetwork.gsonConverter
+}
