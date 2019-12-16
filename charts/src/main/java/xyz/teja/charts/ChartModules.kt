@@ -6,6 +6,8 @@ import xyz.teja.charts.data.ChartsRepositoryImpl
 import xyz.teja.charts.data.remote.ChartRemoteDataSource
 import xyz.teja.charts.domain.repository.ChartsRepository
 import xyz.teja.charts.domain.usecases.ChartsUseCase
+import xyz.teja.charts.presentation.ChartsFragment
+import xyz.teja.charts.presentation.ChartsMvvm
 
 /**
  * @author Teja-Konjeti
@@ -15,12 +17,17 @@ import xyz.teja.charts.domain.usecases.ChartsUseCase
  */
 
 val koinChartsModule = module {
+    single { KoinMainSchedulers() as KoinSchedulers }
+
     single { get<Retrofit>().create(ChartRemoteDataSource::class.java) }
     single {
         ChartsRepositoryImpl(
+            get(),
             get(),
             get()
         ) as ChartsRepository
     }
     single { ChartsUseCase(get()) }
+    single { ChartsMvvm(get()) }
+    single { ChartsFragment() }
 }

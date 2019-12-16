@@ -1,10 +1,11 @@
 package xyz.teja.charts.data.local
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import io.reactivex.Observable
+import io.reactivex.Single
 import xyz.teja.charts.domain.model.ChartInfo
 import xyz.teja.charts.domain.model.MarketPrice
 import java.time.LocalDate
@@ -19,16 +20,19 @@ import java.time.LocalDate
 @Dao
 interface ChartLocalDataSource {
     @Query("SELECT * FROM chart_info WHERE identifier = :identifier")
-    fun getChartInfo(identifier: String): LiveData<ChartInfo>
+    fun getChartInfo(identifier: String): Observable<ChartInfo>
 
-    @Query("SELECT * FROM market_price WHERE dateTime >= :startDate AND currencyName == :currencyName ORDER BY dateTime")
-    fun getPricesLive(
+    @Query("SELECT * FROM market_price WHERE date >= :startDate AND currencyName == :currencyName ORDER BY date")
+    fun getPrices(
         startDate: LocalDate,
         currencyName: String = "BC"
-    ): LiveData<List<MarketPrice>>
+    ): Observable<List<MarketPrice>>
 
-    @Query("SELECT * FROM market_price WHERE dateTime >= :startDate AND currencyName == :currencyName ORDER BY dateTime")
-    fun getPrices(startDate: LocalDate, currencyName: String = "BC"): List<MarketPrice>
+    @Query("SELECT * FROM market_price WHERE date >= :startDate AND currencyName == :currencyName ORDER BY date")
+    fun getPricesOnce(
+        startDate: LocalDate,
+        currencyName: String = "BC"
+    ): Single<List<MarketPrice>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun addChartInfo(chartInfo: ChartInfo): Long

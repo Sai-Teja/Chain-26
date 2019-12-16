@@ -1,7 +1,7 @@
 package xyz.teja.charts.domain.usecases
 
-import androidx.lifecycle.LiveData
-import xyz.teja.charts.domain.model.ChartInfo
+import io.reactivex.Observable
+import xyz.teja.charts.domain.model.MarketPrice
 import xyz.teja.charts.domain.repository.ChartsRepository
 import java.time.Period
 
@@ -12,10 +12,11 @@ import java.time.Period
  * © Copyright 2019 Teja Konjeti. All Rights Reserved.
  */
 
-// This might contain better logic if we had a complex app with multiple repositories
-// to handle
-class ChartsUseCase constructor(private val chartsRepository: ChartsRepository) {
+// This might contain better logic if
+// 1. We had a complex app with multiple repositories to handle
+// 2. We had to map the Repository Object to an UI Object
+internal class ChartsUseCase constructor(private val chartsRepository: ChartsRepository) {
 
-    fun getChartInfo(period: Period): LiveData<ChartInfo> =
-        chartsRepository.getChartInfo(period)
+    fun getPrices(period: Period): Observable<List<MarketPrice>> =
+        chartsRepository.getPrices(period)
 }

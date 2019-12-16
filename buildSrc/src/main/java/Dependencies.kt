@@ -33,6 +33,7 @@ object Versions {
     val targetSdk = 26
 
     val slidingUpPanel = "3.4.0"
+    val sparkGraph = "1.2.0"
 
     val googleAuth = "16.0.1"
     val playCore = "1.6.1"
@@ -48,8 +49,9 @@ object Versions {
 
     val koin = "2.0.1"
 
-    val rxjava = "2.2.15"
-    val rxkotlin = "2.3.0"
+    val rxJava = "2.2.15"
+    val rxKotlin = "2.3.0"
+    val rxAndroid = "2.1.1"
 
     val paperdb = "2.6"
     val rxpaper = "1.4.0"
@@ -72,15 +74,17 @@ object Versions {
     val javaXAnnotations = "1.3.2"
 
     val junit = "4.12"
+    val kotlinTest = "3.4.0"
     val testRunner = "1.1.1"
     val espresso = "3.1.1"
     val assertjCore = "3.12.2"
     val mockitoKotlin = "2.1.0"
-    val mockitoInline = "3.0.0"
+    val mockitoAndroid = "3.2.0"
 }
 
 object LibOther {
     val slidingUpPanel = "com.sothree.slidinguppanel:library:${Versions.slidingUpPanel}"
+    val sparkGraph = "com.robinhood.spark:spark:${Versions.sparkGraph}"
 }
 
 object LibGoogle {
@@ -100,13 +104,15 @@ object LibCore {
     val multiDex = "androidx.multidex:multidex:${Versions.multiDex}"
 
     val room = "androidx.room:room-runtime:${Versions.room}"
+    val roomRxJava = "androidx.room:room-rxjava2:${Versions.room}"
     val roomCompiler = "androidx.room:room-compiler:${Versions.room}"
 
     val koinAndroid = "org.koin:koin-android:${Versions.koin}"
     val koinViewModel = "org.koin:koin-androidx-viewmodel:${Versions.koin}"
 
-    val rxjava = "io.reactivex.rxjava2:rxjava:${Versions.rxjava}"
-    val rxkotlin = "io.reactivex.rxjava2:rxkotlin:${Versions.rxkotlin}"
+    val rxJava = "io.reactivex.rxjava2:rxjava:${Versions.rxJava}"
+    val rxKotlin = "io.reactivex.rxjava2:rxkotlin:${Versions.rxKotlin}"
+    val rxAndroid = "io.reactivex.rxjava2:rxandroid:${Versions.rxAndroid}"
 
     val paperdb = "io.paperdb:paperdb:${Versions.paperdb}"
     val rxpaper = "com.github.pakoito:RxPaper2:${Versions.rxpaper}"
@@ -145,10 +151,19 @@ object LibProtobuf {
 
 object LibTest {
     val junit = "junit:junit:${Versions.junit}"
+    val kotlinTest = "io.kotlintest:kotlintest-runner-junit5:${Versions.kotlinTest}"
     val testRunner = "androidx.test:runner:${Versions.testRunner}"
+
     val espresso = "androidx.test.espresso:espresso-core:${Versions.espresso}"
+
     val assertjCore = "org.assertj:assertj-core:${Versions.assertjCore}"
+
     val mockitoKotlin = "com.nhaarman.mockitokotlin2:mockito-kotlin:${Versions.mockitoKotlin}"
-    val mockitoInline = "org.mockito:mockito-inline:${Versions.mockitoInline}"
+    val mockitoAndroid = "org.mockito:mockito-android:${Versions.mockitoAndroid}"
+
+    val koinTestExtension = "io.kotlintest:kotlintest-extensions-koin:${Versions.kotlinTest}"
+    val koinTest = "org.koin:koin-test:${Versions.koin}"
+
     val lifecycleTesting = "androidx.arch.core:core-testing:${Versions.lifecycle}"
+    val roomTesting = "android.arch.persistence.room:testing:1.1.1"
 }

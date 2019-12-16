@@ -1,1 +1,6 @@
-<resources></resources>
+<resources>
+    <string name="period_year">Year</string>
+    <string name="period_month">Month</string>
+    <string name="period_week">Week</string>
+    <string name="title">Bit Coin Prices</string>
+</resources>

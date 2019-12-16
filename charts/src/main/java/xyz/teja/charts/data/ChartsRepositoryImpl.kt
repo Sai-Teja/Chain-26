@@ -1,14 +1,16 @@
 package xyz.teja.charts.data
 
-import androidx.lifecycle.LiveData
+import android.annotation.SuppressLint
 import io.reactivex.Completable
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.Observable
+import xyz.teja.charts.KoinSchedulers
 import xyz.teja.charts.data.local.ChartLocalDataSource
 import xyz.teja.charts.data.remote.ChartRemoteDataSource
 import xyz.teja.charts.data.remote.chartMapper
 import xyz.teja.charts.domain.model.ChartInfo
 import xyz.teja.charts.domain.model.MarketPrice
 import xyz.teja.charts.domain.repository.ChartsRepository
+import xyz.teja.charts.totalDays
 import java.time.LocalDate
 import java.time.Period
 
@@ -21,36 +23,49 @@ import java.time.Period
 
 internal class ChartsRepositoryImpl constructor(
     private val local: ChartLocalDataSource,
-    private val remote: ChartRemoteDataSource
+    private val remote: ChartRemoteDataSource,
+    private val koinSchedulers: KoinSchedulers
 ) : ChartsRepository {
 
     override fun refresh(period: Period): Completable {
-        val timeSpan = "${period.days}days"
+        val timeSpan = "${period.totalDays()}days"
 
         return remote.getChart(timeSpan = timeSpan)
-            .observeOn(Schedulers.io())
-            .subscribeOn(Schedulers.computation())
-            .toObservable()
+            .subscribeOn(koinSchedulers.computation())
             .map { Pair(it, timeSpan) }
             .map(chartMapper)
-            .map {
+            .observeOn(koinSchedulers.io())
+            .doOnSuccess {
                 local.addChartInfo(it.first)
                 local.addPrices(it.second)
             }
-            .ignoreElements()
+            .ignoreElement()
     }
 
-    override fun getPrices(period: Period): LiveData<List<MarketPrice>> {
-        val prices = local.getPrices(LocalDate.now().minusDays(period.days.toLong()))
+    @SuppressLint("CheckResult")
+    // Don't need to be disposed as it is being updated in the background and is a Single
+    override fun getPrices(period: Period): Observable<List<MarketPrice>> {
+        val chartStartDate = LocalDate.now().minusDays(period.totalDays().toLong())
 
-        if (prices.isEmpty() || prices.last().dateTime != LocalDate.now())
-            refresh(period)
+        local.getPricesOnce(chartStartDate)
+            .subscribeOn(koinSchedulers.io())
+            .subscribe { prices ->
+                val enoughData =
+                    prices.size >= period.totalDays() - 1 // API gives one less day sometimes
+                val latestData =
+                    prices.isNotEmpty() && prices.last().date == LocalDate.now().minusDays(1)
 
-        return local.getPricesLive(LocalDate.now().minusDays(period.days.toLong()))
+                if (!enoughData || !latestData) {
+                    refresh(period).subscribe()
+                }
+            }
+
+        return local.getPrices(chartStartDate)
+            .subscribeOn(koinSchedulers.io())
     }
 
-    override fun getChartInfo(period: Period): LiveData<ChartInfo> {
-        val timeSpan = "${period.days}days"
+    override fun getChartInfo(period: Period): Observable<ChartInfo> {
+        val timeSpan = "${period.totalDays()}days"
 
         return local.getChartInfo(timeSpan)
     }

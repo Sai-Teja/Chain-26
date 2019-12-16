@@ -12,6 +12,12 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    testOptions {
+        unitTests.all {
+            useJUnitPlatform()
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled true
@@ -40,14 +46,17 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation LibCore.kotlin
-    implementation LibCore.rxjava
-    implementation LibCore.rxkotlin
+    implementation LibCore.rxJava
+    implementation LibCore.rxKotlin
+    implementation LibCore.rxAndroid
     implementation LibCore.ktx
     implementation LibCore.koinAndroid
     implementation LibSupport.constraintLayout
 
-    testImplementation LibTest.junit
-
+    androidTestImplementation LibTest.junit
     androidTestImplementation LibTest.testRunner
     androidTestImplementation LibTest.espresso
+
+    androidTestImplementation LibTest.roomTesting
+    androidTestImplementation LibTest.mockitoAndroid
 }

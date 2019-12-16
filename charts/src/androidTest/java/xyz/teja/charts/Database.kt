@@ -1,7 +1,9 @@
-package xyz.teja.chain26
+package xyz.teja.charts
 
-import androidx.room.*
-import org.koin.dsl.module
+import androidx.room.Database
+import androidx.room.RoomDatabase
+import androidx.room.TypeConverter
+import androidx.room.TypeConverters
 import xyz.teja.charts.data.local.ChartLocalDataSource
 import xyz.teja.charts.domain.model.ChartInfo
 import xyz.teja.charts.domain.model.MarketPrice
@@ -18,7 +20,7 @@ import java.time.ZoneId
 
 @Database(entities = [ChartInfo::class, MarketPrice::class], version = 1)
 @TypeConverters(LocalDateTypeConverter::class)
-internal abstract class AppDatabase : RoomDatabase() {
+abstract class TestDatabase : RoomDatabase() {
     abstract fun chartLocalDataSource(): ChartLocalDataSource
 }
 
@@ -34,15 +36,5 @@ class LocalDateTypeConverter {
     @TypeConverter
     fun toDateString(date: LocalDate?): Long? =
         date?.atStartOfDay(ZoneId.systemDefault())?.toEpochSecond()
-}
-
-val koinDbModule = module {
-    single {
-        Room.databaseBuilder(
-            get(),
-            AppDatabase::class.java, "chart_database"
-        ).build()
-    }
-    single { get<AppDatabase>().chartLocalDataSource() }
 }
 

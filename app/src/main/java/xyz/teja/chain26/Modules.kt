@@ -1,9 +1,7 @@
 package xyz.teja.chain26
 
 import android.content.Context
-import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
-import xyz.teja.chain26.presentation.ChartsMvvm
 import xyz.teja.charts.koinChartsModule
 import xyz.teja.network.koinCacheDirDependency
 import xyz.teja.network.koinNetworkModule
@@ -17,15 +15,11 @@ import xyz.teja.network.koinNetworkModule
 
 val koinModules by lazy {
     listOf(
-        koinBasicsModule, koinDbModule, koinNetworkModule,
-        koinChartsModule, koinViewModels // Order matters
+        koinBasicsModule, koinDbModule,
+        koinNetworkModule, koinChartsModule // Order matters
     )
 }
 
 private val koinBasicsModule = module {
     single(koinCacheDirDependency) { get<Context>().cacheDir }
-}
-
-private val koinViewModels = module {
-    viewModel { ChartsMvvm(get()) }
 }

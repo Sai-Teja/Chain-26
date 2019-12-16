@@ -9,8 +9,8 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation LibCore.kotlin
-    implementation LibCore.rxjava
-    implementation LibCore.rxkotlin
+    implementation LibCore.rxJava
+    implementation LibCore.rxKotlin
     implementation LibCore.koinAndroid
 
     implementation LibNetwork.retrofit

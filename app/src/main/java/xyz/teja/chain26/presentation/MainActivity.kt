@@ -2,7 +2,9 @@ package xyz.teja.chain26.presentation
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import org.koin.android.ext.android.inject
 import xyz.teja.chain26.R
+import xyz.teja.charts.presentation.ChartsFragment
 
 /**
  * @author Teja-Konjeti
@@ -13,6 +15,8 @@ import xyz.teja.chain26.R
 
 class MainActivity : AppCompatActivity() {
 
+    private val chartsFragment: ChartsFragment by inject()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -20,5 +24,9 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(findViewById(R.id.main_toolbar))
 
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.charts, chartsFragment)
+            .commit()
     }
 }

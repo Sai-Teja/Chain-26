@@ -22,6 +22,6 @@ data class ChartInfo(
 @Entity(tableName = "market_price")
 data class MarketPrice(
     val currencyName: String,
-    @PrimaryKey val dateTime: LocalDate,
+    @PrimaryKey val date: LocalDate,
     val price: Float
 )

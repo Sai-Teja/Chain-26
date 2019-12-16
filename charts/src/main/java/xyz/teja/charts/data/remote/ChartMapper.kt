@@ -20,11 +20,9 @@ internal val chartMapper =
 
             val info = ChartInfo(pair.second, name, unit, period, description)
             val prices = values.map {
-                MarketPrice(
-                    "BC", // Bit Coin
-                    Instant.ofEpochMilli(it.time).atZone(ZoneId.systemDefault()).toLocalDate(),
-                    it.price
-                )
+                val date =
+                    Instant.ofEpochSecond(it.time).atZone(ZoneId.systemDefault()).toLocalDate()
+                MarketPrice("BC" /* Bit Coin*/, date, it.price)
             }
 
             Pair(info, prices)

@@ -9,5 +9,5 @@ dependencies {
     implementation LibNetwork.retrofit
     implementation LibNetwork.gsonConverter
 
-    testImplementation LibTest.lifecycleTesting
+    androidTestImplementation LibTest.lifecycleTesting
 }

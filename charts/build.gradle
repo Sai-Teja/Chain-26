@@ -1,4 +1,7 @@
 dependencies {
     implementation LibCore.room
+    implementation LibCore.roomRxJava
+    implementation LibOther.sparkGraph
     kapt LibCore.roomCompiler
+    kaptAndroidTest LibCore.roomCompiler
 }
