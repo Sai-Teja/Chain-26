@@ -52,6 +52,7 @@ object Versions {
     val rxJava = "2.2.15"
     val rxKotlin = "2.3.0"
     val rxAndroid = "2.1.1"
+    val rxJavaExtensions = "0.20.10"
 
     val paperdb = "2.6"
     val rxpaper = "1.4.0"
@@ -113,6 +114,7 @@ object LibCore {
     val rxJava = "io.reactivex.rxjava2:rxjava:${Versions.rxJava}"
     val rxKotlin = "io.reactivex.rxjava2:rxkotlin:${Versions.rxKotlin}"
     val rxAndroid = "io.reactivex.rxjava2:rxandroid:${Versions.rxAndroid}"
+    val rxJavaExtensions = "com.github.akarnokd:rxjava2-extensions:${Versions.rxJavaExtensions}"
 
     val paperdb = "io.paperdb:paperdb:${Versions.paperdb}"
     val rxpaper = "com.github.pakoito:RxPaper2:${Versions.rxpaper}"

@@ -3,4 +3,5 @@
     <string name="period_month">Month</string>
     <string name="period_week">Week</string>
     <string name="title">Bit Coin Prices</string>
+    <string name="max_min_price">$%.1f</string>
 </resources>

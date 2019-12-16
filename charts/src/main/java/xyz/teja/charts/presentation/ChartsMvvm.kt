@@ -1,5 +1,6 @@
 package xyz.teja.charts.presentation
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import io.reactivex.disposables.CompositeDisposable
@@ -15,18 +16,36 @@ import java.time.Period
  */
 
 internal class ChartsMvvm(private val useCase: ChartsUseCase) : ViewModel() {
-    var period: Period = Period.ZERO
-        set(value) {
-            this.pricesDisposable.clear()
-            this.pricesDisposable.add(
-                this.useCase
-                    .getPrices(value)
-                    .subscribe { values.postValue(it) }
-            )
-            field = value
-        }
-
     private var pricesDisposable = CompositeDisposable()
 
-    val values = MutableLiveData<List<MarketPrice>>()
+    private val mValues = MutableLiveData<List<MarketPrice>>()
+    val values = mValues as LiveData<List<MarketPrice>>
+
+    private val mLoading = MutableLiveData<LoadingState>(LoadingState.LOADED)
+    val loading = mLoading as LiveData<LoadingState>
+
+    var period: Period = Period.ZERO
+        set(newPeriod) {
+            this.pricesDisposable.clear()
+            this.mLoading.postValue(LoadingState.LOADING)
+            this.pricesDisposable.add(
+                this.useCase
+                    .getPrices(newPeriod)
+                    .subscribe(
+                        {
+                            mValues.postValue(it)
+                            mLoading.postValue(LoadingState.LOADED)
+                        },
+                        // Throwable can be used to determine the error for a granular error message
+                        { this.mLoading.postValue(LoadingState.ERROR) }
+                    )
+            )
+            field = newPeriod
+        }
+}
+
+enum class LoadingState {
+    LOADING,
+    LOADED,
+    ERROR
 }

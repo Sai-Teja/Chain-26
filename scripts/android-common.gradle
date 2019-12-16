@@ -49,6 +49,7 @@ dependencies {
     implementation LibCore.rxJava
     implementation LibCore.rxKotlin
     implementation LibCore.rxAndroid
+    implementation LibCore.rxJavaExtensions
     implementation LibCore.ktx
     implementation LibCore.koinAndroid
     implementation LibSupport.constraintLayout
