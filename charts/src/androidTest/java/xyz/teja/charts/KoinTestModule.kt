@@ -5,6 +5,7 @@ import org.koin.dsl.module
 import xyz.teja.charts.data.ChartsRepositoryImpl
 import xyz.teja.charts.data.remote.ChartRemoteDataSource
 import xyz.teja.charts.domain.repository.ChartsRepository
+import xyz.teja.charts.domain.usecases.ChartsUseCase
 
 /**
  * @author Teja-Konjeti
@@ -22,4 +23,5 @@ val koinTestModule = module {
             .chartLocalDataSource()
     }
     single { ChartsRepositoryImpl(get(), get(), get()) as ChartsRepository }
+    single { ChartsUseCase(get()) }
 }

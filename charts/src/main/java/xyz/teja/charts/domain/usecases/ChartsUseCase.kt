@@ -30,7 +30,7 @@ internal class ChartsUseCase constructor(private val chartsRepository: ChartsRep
         val enoughData =
             prices.size >= period.totalDays() - 1 // API gives one less day
         val latestData =
-            prices.isNotEmpty() && prices.last().date == chartRemoteDateNow.minusDays(1)
+            prices.isNotEmpty() && prices.last().date == chartRemoteDateNow
 
         return if (!enoughData || !latestData) {
             chartsRepository.refresh(period)

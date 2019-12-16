@@ -12,12 +12,13 @@ import org.koin.core.KoinComponent
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.core.get
+import xyz.teja.charts.data.remote.chartRemoteDateNow
 import xyz.teja.charts.domain.model.MarketPrice
-import xyz.teja.charts.domain.repository.ChartsRepository
+import xyz.teja.charts.domain.usecases.ChartsUseCase
 import java.time.Period
 
 @RunWith(AndroidJUnit4ClassRunner::class)
-class ChartsRepositoryTest : KoinComponent {
+class ChartsUseCaseTest : KoinComponent {
     @Before
     fun beforeTest() {
         startKoin {
@@ -32,16 +33,17 @@ class ChartsRepositoryTest : KoinComponent {
     }
 
     @Test
-    fun chartsRepositoryTest() {
+    fun chartsUseCaseTest() {
         val testObserver = TestObserver<List<MarketPrice>>()
 
-        get<ChartsRepository>()
+        get<ChartsUseCase>()
             .getPrices(Period.ofDays(1))
             .subscribe(testObserver)
 
-        testObserver.awaitCount(1)
+        testObserver.awaitCount(2)
 
-        testObserver.assertValue { it.count() == 1 }
+        testObserver.assertValueCount(2)
+        testObserver.assertValueAt(1) { it[0].date == chartRemoteDateNow }
 
         testObserver.dispose()
     }
