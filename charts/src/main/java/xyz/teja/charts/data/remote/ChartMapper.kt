@@ -4,7 +4,6 @@ import io.reactivex.functions.Function
 import xyz.teja.charts.domain.model.ChartInfo
 import xyz.teja.charts.domain.model.MarketPrice
 import java.time.Instant
-import java.time.ZoneId
 
 /**
  * @author Teja-Konjeti
@@ -21,7 +20,7 @@ internal val chartMapper =
             val info = ChartInfo(pair.second, name, unit, period, description)
             val prices = values.map {
                 val date =
-                    Instant.ofEpochSecond(it.time).atZone(ZoneId.systemDefault()).toLocalDate()
+                    Instant.ofEpochSecond(it.time).atZone(chartRemoteDataZone).toLocalDate()
                 MarketPrice("BC" /* Bit Coin*/, date, it.price)
             }
 

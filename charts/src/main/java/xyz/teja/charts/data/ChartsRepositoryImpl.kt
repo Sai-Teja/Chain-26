@@ -1,17 +1,16 @@
 package xyz.teja.charts.data
 
-import android.annotation.SuppressLint
 import io.reactivex.Completable
 import io.reactivex.Observable
 import xyz.teja.charts.KoinSchedulers
 import xyz.teja.charts.data.local.ChartLocalDataSource
 import xyz.teja.charts.data.remote.ChartRemoteDataSource
 import xyz.teja.charts.data.remote.chartMapper
+import xyz.teja.charts.data.remote.chartRemoteDateNow
 import xyz.teja.charts.domain.model.ChartInfo
 import xyz.teja.charts.domain.model.MarketPrice
 import xyz.teja.charts.domain.repository.ChartsRepository
 import xyz.teja.charts.totalDays
-import java.time.LocalDate
 import java.time.Period
 
 /**
@@ -42,23 +41,8 @@ internal class ChartsRepositoryImpl constructor(
             .ignoreElement()
     }
 
-    @SuppressLint("CheckResult")
-    // Don't need to be disposed as it is being updated in the background and is a Single
     override fun getPrices(period: Period): Observable<List<MarketPrice>> {
-        val chartStartDate = LocalDate.now().minusDays(period.totalDays().toLong())
-
-        local.getPricesOnce(chartStartDate)
-            .subscribeOn(koinSchedulers.io())
-            .subscribe { prices ->
-                val enoughData =
-                    prices.size >= period.totalDays() - 1 // API gives one less day sometimes
-                val latestData =
-                    prices.isNotEmpty() && prices.last().date == LocalDate.now().minusDays(1)
-
-                if (!enoughData || !latestData) {
-                    refresh(period).subscribe()
-                }
-            }
+        val chartStartDate = chartRemoteDateNow.minusDays(period.totalDays().toLong())
 
         return local.getPrices(chartStartDate)
             .subscribeOn(koinSchedulers.io())

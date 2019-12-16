@@ -1,8 +1,8 @@
 package xyz.teja.charts
 
+import xyz.teja.charts.data.remote.chartRemoteDataZone
+import xyz.teja.charts.data.remote.chartRemoteDateNow
 import xyz.teja.charts.domain.model.ChartInfo
-import java.time.LocalDate
-import java.time.ZoneId
 
 /**
  * @author Teja-Konjeti
@@ -20,7 +20,7 @@ object TestCase {
 "description": "Average USD market price across major bitcoin exchanges.",
 "values": [
 {
-"x": ${LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant().epochSecond},
+"x": ${chartRemoteDateNow.atStartOfDay(chartRemoteDataZone).toInstant().epochSecond},
 "y": 8695.077142857142
 }]
 }"""

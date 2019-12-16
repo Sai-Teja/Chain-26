@@ -5,11 +5,11 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverter
 import androidx.room.TypeConverters
 import xyz.teja.charts.data.local.ChartLocalDataSource
+import xyz.teja.charts.data.remote.chartRemoteDataZone
 import xyz.teja.charts.domain.model.ChartInfo
 import xyz.teja.charts.domain.model.MarketPrice
 import java.time.Instant
 import java.time.LocalDate
-import java.time.ZoneId
 
 /**
  * @author Teja-Konjeti
@@ -30,11 +30,11 @@ class LocalDateTypeConverter {
         if (date == null) {
             null
         } else {
-            Instant.ofEpochSecond(date).atZone(ZoneId.systemDefault()).toLocalDate()
+            Instant.ofEpochSecond(date).atZone(chartRemoteDataZone).toLocalDate()
         }
 
     @TypeConverter
     fun toDateString(date: LocalDate?): Long? =
-        date?.atStartOfDay(ZoneId.systemDefault())?.toEpochSecond()
+        date?.atStartOfDay(chartRemoteDataZone)?.toEpochSecond()
 }
 

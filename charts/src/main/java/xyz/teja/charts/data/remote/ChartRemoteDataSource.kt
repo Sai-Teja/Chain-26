@@ -3,6 +3,9 @@ package xyz.teja.charts.data.remote
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
+import java.time.Instant
+import java.time.LocalDate
+import java.time.ZoneId
 
 /**
  * @author Teja-Konjeti
@@ -19,3 +22,6 @@ internal interface ChartRemoteDataSource {
         @Query("format") format: String = "json"
     ): Single<ChartRaw>
 }
+
+val chartRemoteDataZone: ZoneId = ZoneId.of("GMT")
+val chartRemoteDateNow: LocalDate = Instant.now().atZone(chartRemoteDataZone).toLocalDate()

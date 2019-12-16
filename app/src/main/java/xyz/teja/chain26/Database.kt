@@ -3,11 +3,11 @@ package xyz.teja.chain26
 import androidx.room.*
 import org.koin.dsl.module
 import xyz.teja.charts.data.local.ChartLocalDataSource
+import xyz.teja.charts.data.remote.chartRemoteDataZone
 import xyz.teja.charts.domain.model.ChartInfo
 import xyz.teja.charts.domain.model.MarketPrice
 import java.time.Instant
 import java.time.LocalDate
-import java.time.ZoneId
 
 /**
  * @author Teja-Konjeti
@@ -28,12 +28,12 @@ class LocalDateTypeConverter {
         if (date == null) {
             null
         } else {
-            Instant.ofEpochSecond(date).atZone(ZoneId.systemDefault()).toLocalDate()
+            Instant.ofEpochSecond(date).atZone(chartRemoteDataZone).toLocalDate()
         }
 
     @TypeConverter
     fun toDateString(date: LocalDate?): Long? =
-        date?.atStartOfDay(ZoneId.systemDefault())?.toEpochSecond()
+        date?.atStartOfDay(chartRemoteDataZone)?.toEpochSecond()
 }
 
 val koinDbModule = module {
