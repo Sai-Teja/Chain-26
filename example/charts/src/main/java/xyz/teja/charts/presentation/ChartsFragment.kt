@@ -9,13 +9,9 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.example.charts.R
-import hu.akarnokd.rxjava2.math.MathObservable
-import io.reactivex.Observable
 import kotlinx.android.synthetic.main.fragment_chart.*
 import kotlinx.android.synthetic.main.fragment_chart.view.*
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import xyz.teja.charts.domain.repository.ChartsRepository
 import xyz.teja.charts.presentation.LoadingState.*
 import java.time.Period
 import java.time.format.DateTimeFormatter
@@ -47,22 +43,18 @@ class ChartsFragment : Fragment() {
         viewModel.values.observe(this, Observer {
             adapter.data = it
 
-            // Kotlin Map to avoid multiple calculations on subscription
-            val prices = it.map { marketPrice -> marketPrice.price }
-            val pricesObservable = Observable.fromIterable(prices)
-
-            MathObservable.max(pricesObservable).subscribe { price ->
-                maxPrice.text = resources.getString(R.string.max_min_price, price)
-            }
-            MathObservable.min(pricesObservable).subscribe { price ->
-                minPrice.text = resources.getString(R.string.max_min_price, price)
-            }
-
             val format = DateTimeFormatter.ISO_DATE
 
             startDate.text = it.firstOrNull()?.date?.format(format) ?: ""
             endDate.text = it.lastOrNull()?.date?.format(format) ?: ""
         })
+
+        viewModel.minPrice.observe(
+            this,
+            Observer { minPrice.text = resources.getString(R.string.max_min_price, it) })
+        viewModel.maxPrice.observe(
+            this,
+            Observer { maxPrice.text = resources.getString(R.string.max_min_price, it) })
 
         viewModel.loading.observe(this, Observer {
             when (it) {
