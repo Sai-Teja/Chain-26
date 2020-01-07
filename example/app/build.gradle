@@ -3,7 +3,7 @@ android {
         def appName = "Android Starter"
 
         // Remember to change this in the manifest if changed here
-        applicationId "xyz.teja.starter"
+        applicationId "xyz.teja.example"
         resConfigs "en"
 
         resValue "string", "app_name", appName
@@ -13,4 +13,5 @@ android {
 dependencies {
     implementation project(Modules.NETWORK.path)
     implementation project(Modules.CACHE.path)
+    implementation project(Modules.CHARTS.path)
 }

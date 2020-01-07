@@ -1,28 +1,5 @@
 @file:Suppress("unused", "MayBeConstant")
 
-private val scriptsFolder = "scripts"
-val scriptsPath = System.getProperty("user.dir") + "/$scriptsFolder"
-val buildFilePath = "$scriptsFolder/main.gradle.kts"
-
-enum class ProjectType {
-    APPLICATION_ANDROID,
-    LIBRARY_ANDROID,
-    LIBRARY_KOTLIN,
-    CPP_STATIC,
-    CPP_SHARED,
-    PROTOBUF,
-    PROTOBUF_GRPC
-}
-
-enum class Modules(val path: String, val type: List<ProjectType>) {
-    APP(":app", ProjectType.APPLICATION_ANDROID),
-    CHARTS(":charts", ProjectType.LIBRARY_ANDROID),
-    CACHE(":cache", ProjectType.LIBRARY_ANDROID),
-    NETWORK(":network", ProjectType.LIBRARY_KOTLIN);
-
-    constructor(path: String, type: ProjectType) : this(path, listOf(type))
-}
-
 object Versions {
     val kotlin = "1.3.50"
     val protobufScript = "0.8.10"

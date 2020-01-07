@@ -1,7 +1,8 @@
 package xyz.teja.network
 
-import org.koin.core.qualifier.named
 import org.koin.dsl.module
+import xyz.teja.base.AppConfig
+import xyz.teja.base.koinCacheDirDependency
 
 /**
  * @author Teja-Konjeti
@@ -10,17 +11,13 @@ import org.koin.dsl.module
  * © Copyright 2019 Teja Konjeti. All Rights Reserved.
  */
 
-private const val BASE_URL = "https://api.blockchain.info/"
-
-val koinCacheDirDependency = named("cacheDir")
-
 val koinNetworkModule = module {
     single { NetworkRepositoryImpl() as NetworkRepository }
     single {
         get<NetworkRepository>().getNetworkClient(
-            BASE_URL,
+            AppConfig.BASE_URL,
             get(koinCacheDirDependency),
-            true
+            AppConfig.DEBUG
         )
     }
 }

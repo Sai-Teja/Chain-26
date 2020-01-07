@@ -43,21 +43,27 @@ repositories {
 }
 
 dependencies {
+    if (path != Modules.BASE.path) implementation project(Modules.BASE.path)
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation LibCore.kotlin
+    implementation LibCore.ktx
+
     implementation LibCore.rxJava
     implementation LibCore.rxKotlin
     implementation LibCore.rxAndroid
     implementation LibCore.rxJavaExtensions
-    implementation LibCore.ktx
+
     implementation LibCore.koinAndroid
-    implementation LibSupport.constraintLayout
+    implementation LibCore.koinViewModel
 
     androidTestImplementation LibTest.junit
     androidTestImplementation LibTest.testRunner
     androidTestImplementation LibTest.espresso
 
-    androidTestImplementation LibTest.roomTesting
     androidTestImplementation LibTest.mockitoAndroid
+
+    androidTestImplementation LibTest.roomTesting
+    kaptAndroidTest LibCore.roomCompiler
 }

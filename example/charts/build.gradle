@@ -1,0 +1,7 @@
+dependencies {
+    implementation LibCore.room
+    implementation LibCore.roomRxJava
+    kapt LibCore.roomCompiler
+
+    implementation LibOther.sparkGraph
+}

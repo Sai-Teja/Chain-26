@@ -16,7 +16,7 @@
         app:titleTextColor="#dedede" />
 
     <FrameLayout
-        android:id="@+id/fragment"
+        android:id="@+id/charts"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/main_toolbar" />
