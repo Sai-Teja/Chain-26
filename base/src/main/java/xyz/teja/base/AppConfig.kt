@@ -9,6 +9,7 @@ object AppConfig: KoinComponent {
     const val DATABASE_NAME = "app_database"
     const val BASE_URL = "https://api.blockchain.info/"
 
+    @Suppress("SameParameterValue")
     private fun getFieldFromGradle(context: Context, fieldName: String): Any? {
         return getStaticFieldValue(resolveBuildConfigClass(context), fieldName)
     }
@@ -38,7 +39,7 @@ object AppConfig: KoinComponent {
         fieldName: String
     ): Any? {
         try {
-            return clazz!!.getField(fieldName)[null]
+            return clazz?.getField(fieldName)?.get(null)
         } catch (e: NoSuchFieldException) {
             e.printStackTrace()
         } catch (e: IllegalAccessException) {
