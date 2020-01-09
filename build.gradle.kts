@@ -75,3 +75,25 @@ subprojects {
 task("clean", Delete::class) {
     delete(rootProject.buildDir)
 }
+
+tasks.register("cleanAll", Delete::class) {
+    delete(".idea")
+
+    val files = allprojects.map {
+        file("${rootDir.path}${it.path.replace(":", File.separator)}")
+    }.toMutableList()
+
+    files.add(file("${rootDir.path}${File.separator}buildSrc"))
+    files.forEach { file ->
+        file.list()
+            ?.filter { it.endsWith(".iml") }
+            ?.forEach {
+                delete("$file${File.separator}$it")
+            }
+
+        delete("$file${File.separator}.gradle")
+        delete("$file${File.separator}build")
+    }
+
+    delete(rootProject.buildDir)
+}
