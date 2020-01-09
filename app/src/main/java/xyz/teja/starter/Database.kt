@@ -14,11 +14,14 @@ import java.time.ZoneId
  * © Copyright 2019 Teja Konjeti. All Rights Reserved.
  */
 
-@Database(entities = [], version = 1)
+@Database(entities = [Sample::class], version = 1)
 @TypeConverters(LocalDateTypeConverter::class)
 internal abstract class AppDatabase : RoomDatabase() {
 //    abstract fun someLocalDataSource(): SomeLocalDataSource
 }
+
+@Entity
+data class Sample(@PrimaryKey val name: String, val number: Int)
 
 class LocalDateTypeConverter {
     private val remoteDataZone: ZoneId = ZoneId.of("GMT")

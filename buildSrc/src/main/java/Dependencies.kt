@@ -1,7 +1,7 @@
 @file:Suppress("unused", "MayBeConstant")
 
 object Versions {
-    val kotlin = "1.3.50"
+    val kotlin = "1.3.61"
     val protobufScript = "0.8.10"
 
     val compileSdk = 29
@@ -40,7 +40,7 @@ object Versions {
 
     val glide = "4.9.0"
 
-    val appcompat = "1.0.2"
+    val appcompat = "1.1.0"
     val design = "1.0.0"
     val cardview = "1.0.0"
     val recyclerView = "1.0.0"

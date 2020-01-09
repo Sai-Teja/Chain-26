@@ -70,6 +70,7 @@ subprojects {
     }
 
     apply("$scriptsPath/kt-lint.gradle")
+    apply("$scriptsPath/resolution-fixes.gradle")
 }
 
 task("clean", Delete::class) {
