@@ -1,7 +1,6 @@
 private const val scriptsFolder = "scripts"
 val scriptsPath = "${System.getProperty("user.dir")}/$scriptsFolder"
-// Does not work with Android Studio :(
-//val buildFilePath = "$scriptsFolder/main.gradle.kts"
+val buildFilePath = "$scriptsFolder/main.gradle.kts"
 
 enum class ProjectType {
     APPLICATION_ANDROID,
